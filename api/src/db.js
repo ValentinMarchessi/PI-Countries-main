@@ -35,16 +35,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 console.log('Setting up relations...');
-const { Country, Region, Subregion } = sequelize.models;
+const { Country, Activity } = sequelize.models;
 // Aca vendrian las relaciones
-Region.hasMany(Country);
-Country.belongsTo(Region, {as: 'region'});
-
-Region.hasMany(Subregion);
-Subregion.belongsTo(Region, {as: 'region'});
-
-Subregion.hasMany(Country);
-Country.belongsTo(Subregion, {as: 'subregion'});
+Country.belongsToMany(Activity, {through: 'CountryActivities'})
+Activity.belongsToMany(Country, {through: 'CountryActivities'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
