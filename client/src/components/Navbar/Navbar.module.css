@@ -4,4 +4,9 @@
     padding: 2vh 1vw;
     width: 100vw;
     border-bottom: 1px solid black;
+    justify-content: space-around;
+}
+
+.searchBar{
+    text-align: center;
 }
