@@ -1,0 +1,15 @@
+.cardContainer{
+    padding: 30px;
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: auto auto;
+    justify-content: space-around;
+}
+
+.navigation{
+    width: 100vw;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
