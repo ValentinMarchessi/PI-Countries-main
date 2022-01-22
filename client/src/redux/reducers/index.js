@@ -1,9 +1,18 @@
-const initialState = {};
+const initialState = {
+    currPage: [],
+    filterOptions: {
+        continent: '',
+        activity: '',
+        order: {
+            ascending: true,
+            by: 'name',
+        }
+    }
+};
 
 export default function rootReducer(state = initialState, action) {
     switch (action.name) {
-        case 'HOME_LOAD':
-            
+        default:
+            return state;
     }
-    return state;
 }
