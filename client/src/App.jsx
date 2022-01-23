@@ -5,6 +5,7 @@ import './App.css';
 import Landing from './components/Landing/Landing';
 import Home from './components/Home/Home';
 import Navbar from './components/Navbar/Navbar';
+import CountryDetails from './components/CountryDetails/CountryDetails';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route exact path='/' element={<Landing />} />
-        <Route path='/home' element={<Home/>}/>
+        <Route path='/home' element={<Home />} />
+        <Route path='/country/:id' element={<CountryDetails />} />
       </Routes>
     </div>
   );
