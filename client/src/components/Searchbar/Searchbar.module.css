@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.container h1{
+    font-style: italic;
+    font-weight: 400;
+    margin: 0;
+}
+
+.input{
+    width: 40vw;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid black;
+    box-shadow: 2px 1px 5px rgba(0,0,0,.4);
+    text-align: center;
+}

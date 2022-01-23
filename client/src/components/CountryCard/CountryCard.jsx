@@ -4,7 +4,10 @@ export default function CountryCard({name, flag, continent}) {
     return (
         <div className={style.card}>
             <img src={flag} alt='flag'></img>
-            <h1>{name}</h1>
+            <div className={style.infoBox}>
+                <span>{name}</span>
+                <span>{continent}</span>
+            </div>
         </div>
     )
 }
