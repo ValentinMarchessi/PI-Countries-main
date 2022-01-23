@@ -1,51 +1,49 @@
 import CountryCard from '../CountryCard/CountryCard.jsx';
 import style from './CardContainer.module.css';
-import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadPages } from '../../redux/actions';
 
 export default function CardContainer() {
     const [page, setPage] = useState([]);
     const [index, setIndex] = useState(1); /* page index */
-    let max_index = useRef();
+
+    const dispatch = useDispatch();
+    const pages = useSelector(store => store.pages);
 
     useEffect(() => {
-        async function getMaxIndex() {
-            max_index.current = await axios(`http://localhost:3001/countries`).then(({data}) => data.length);
-        };
-        getMaxIndex();
-    },[])
-
+        dispatch(loadPages());
+    }, [dispatch])
+    
     useEffect(() => {
-        axios(`http://localhost:3001/countries?page=${index}`)
-            .then(({data}) => {
-                setPage(data.map((country) => {
-                    return <CountryCard
-                        key={country.id}
-                        name={country.name}
-                        flag={country.flag}
-                        continent={country.continent}
-                    />
-            }))
-        })
-    }, [index]);
+        if(pages[index]) setPage(pages[index - 1].map(country => 
+            <CountryCard
+                key={country.id}
+                id={country.id}
+                name={country.name}
+                flag={country.flag}
+                continent={country.continent}
+            />
+        ))
+    },[index,setPage,pages])
 
-    function incrementPage() {
-        if((index + 1)*10 < max_index.current) setIndex(index + 1);
+    function handlePageNav(event) {
+        const { name } = event.target;
+        if (name === 'incrementPage' && index < pages.length) setIndex(index + 1);
+        if (name === 'decrementPage' && index > 1) setIndex(index - 1);
     }
 
-    function decrementPage() {
-        if (index > 1) setIndex(index - 1);    
-    }
+    //console.log(page, pages);
 
     return (
         <div className={style.main}>
             <div className={style.cardContainer}>
-                {page}
+                {page.length ? page : <div>Loading</div>}
             </div>
             <div className={style.navigation}>
-                <button onClick={decrementPage}>Previous</button>
+                <button name='decrementPage' onClick={handlePageNav}>Previous</button>
                 <h1>{index}</h1>
-                <button onClick={incrementPage}>Next</button>
+                <button name='incrementPage' onClick={handlePageNav}>Next</button>
             </div>
         </div>
     )

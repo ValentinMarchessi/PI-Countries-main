@@ -1,5 +1,5 @@
 const initialState = {
-    currPage: [],
+    pages: [],
     filterOptions: {
         continent: '',
         activity: '',
@@ -11,7 +11,12 @@ const initialState = {
 };
 
 export default function rootReducer(state = initialState, action) {
-    switch (action.name) {
+    switch (action.type) {
+        case 'LOAD_PAGES':
+            return {
+                ...state,
+                pages: action.payload,
+            }
         default:
             return state;
     }
