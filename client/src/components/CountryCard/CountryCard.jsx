@@ -1,11 +1,14 @@
 import style from './CountryCard.module.css';
+import { Link } from 'react-router-dom';
 
-export default function CountryCard({name, flag, continent}) {
+export default function CountryCard({id, name, flag, continent}) {
     return (
         <div className={style.card}>
-            <img src={flag} alt='flag'></img>
+            <Link to={`/country/${id}`}>
+                <img src={flag} alt='flag'></img>
+            </Link>
             <div className={style.infoBox}>
-                <span>{name}</span>
+                <h1>{name}</h1>
                 <span>{continent}</span>
             </div>
         </div>
