@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 const { Op } = require('sequelize');
-const { Country, Activity, conn } = require('../db.js')
+const { Country, Activity } = require('../db.js')
 
 router.get('/', async function (req, res) {
     const { name, page } = req.query;
@@ -61,7 +61,7 @@ router.get('/', async function (req, res) {
     }
 })
 
-router.get('/:countryId', async (req, res) => {
+router.get('/:countryId', async function (req, res){
     try {
         const { countryId } = req.params;
         const { data } = await axios.get(`https://restcountries.com/v3/alpha/${countryId}`);
