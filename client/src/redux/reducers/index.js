@@ -1,13 +1,6 @@
 const initialState = {
+    countries: [],
     pages: [],
-    filterOptions: {
-        continent: '',
-        activity: '',
-        order: {
-            ascending: true,
-            by: 'name',
-        }
-    }
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -16,6 +9,11 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 pages: action.payload,
+            }
+        case 'LOAD_COUNTRIES':
+            return {
+                ...state,
+                countries: action.payload,
             }
         default:
             return state;

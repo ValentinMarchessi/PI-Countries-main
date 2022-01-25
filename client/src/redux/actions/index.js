@@ -17,3 +17,15 @@ export function loadPages() {
         }
     }
 }
+
+export function loadCountries() {
+    return async function (dispatch) {
+        try {
+            const countries = await axios.get(`http://localhost:3001/countries`).then(({ data }) => data);
+            dispatch({type: 'LOAD_COUNTRIES', payload: countries});
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
