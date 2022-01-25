@@ -30,7 +30,6 @@ export default function Searchbar() {
 
     return (
         <div className={style.container}>
-            <h1>Find your destination...</h1>
             <div className={style.searchbar}>
                 <input type="text" className={style.input} placeholder="Canada" onChange={handleChange} />
                 {results.length ?
