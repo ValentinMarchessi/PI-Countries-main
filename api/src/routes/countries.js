@@ -64,22 +64,24 @@ router.get('/', async function (req, res) {
 router.get('/:countryId', async function (req, res){
     try {
         const { countryId } = req.params;
-        const { data } = await axios.get(`https://restcountries.com/v3/alpha/${countryId}`);
-        const { cca3, name, flags, region, capital, subregion, area, population } = data[0];
-        const activities = await Activity.findAll({
-            include: [{
-                model: Country,
-                through: {
-                    where: { countryId },
-                }
-            }]
-        })
-        data ? res.json({
-            id: cca3,
+        const {
+            cca3, 
             name,
             flags,
-            continent: region,
+            region,
             capital,
+            subregion,
+            area,
+            population ,
+        } = await axios.get(`https://restcountries.com/v3/alpha/${countryId}`).then(({data}) => data[0]);
+        const activities = await Country.findOne({ where: { id: countryId } }).then(country => country.getActivities()).catch(err => []);
+
+        cca3 ? res.json({
+            id: cca3,
+            name: name.common,
+            flag: flags[0],
+            continent: region,
+            capital: capital ? capital[0] : 'Unavailable',
             subregion,
             area,
             population,
