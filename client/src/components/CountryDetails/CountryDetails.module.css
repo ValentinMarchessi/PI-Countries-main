@@ -1,0 +1,45 @@
+.container{
+    width: 65vw;
+    margin:auto;
+    background-color: pink;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.container img{
+    width: 200px;
+    margin: auto;
+}
+
+.infoContainer{
+    background-color: rgb(127, 127, 255);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.activityCard {
+    height: fit-content;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: cyan;
+}
+
+.activityCardsContainer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 20px;
+}
+
+.activities{
+    padding: 30px;
+    margin:0 auto;
+}
+
+.activities h1{
+    width: fit-content;
+    margin: auto;
+}
