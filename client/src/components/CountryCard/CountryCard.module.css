@@ -17,7 +17,7 @@
     height: inherit;
 }
 
-img{
+.card img{
     width: 100%;
     height: inherit;
     object-fit: cover;
