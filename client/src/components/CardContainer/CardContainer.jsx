@@ -25,8 +25,8 @@ export default function CardContainer() {
                 continent={country.continent}
             />
         ))
-    },[index,setPage,pages])
-
+    }, [index, setPage, pages])
+    
     function handlePageNav(event) {
         const { name } = event.target;
         if (name === 'incrementPage' && index < pages.length) setIndex(index + 1);
@@ -36,15 +36,17 @@ export default function CardContainer() {
     //console.log(page, pages);
 
     return (
-        <div className={style.main}>
-            <div className={style.cardContainer}>
-                {page.length ? page : <div>Loading</div>}
-            </div>
-            <div className={style.navigation}>
-                <button name='decrementPage' onClick={handlePageNav}>Previous</button>
-                <h1>{index}</h1>
-                <button name='incrementPage' onClick={handlePageNav}>Next</button>
-            </div>
-        </div>
-    )
+		<div className={style.main}>
+			{page.length ? <div className={style.cardContainer}>{page}</div> : <div className="loader"></div>}
+			<div className={style.navigation}>
+				<button name="decrementPage" onClick={handlePageNav}>
+					Previous
+				</button>
+				<h1>{index}</h1>
+				<button name="incrementPage" onClick={handlePageNav}>
+					Next
+				</button>
+			</div>
+		</div>
+	);
 }
