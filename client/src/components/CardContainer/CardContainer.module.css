@@ -15,3 +15,25 @@
     justify-content: center;
     gap: 30px;
 }
+
+.options{
+    background-color: #7A82AB;
+    width:fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    border-radius: 10px;
+}
+
+.options button{
+    background-color: transparent;
+    border: hidden;
+    border-radius: 5px;
+    transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.options button:hover{
+    background-color: #C2EFB3;
+}
