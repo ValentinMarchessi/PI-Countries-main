@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import style from './ActivityForm.module.css';
@@ -9,7 +9,6 @@ function NameForm({onSuccess}) {
 	function handleSubmit(event) {
 		event.preventDefault();
 		const { name, value } = event.target[0]; //name input value destruct
-		console.log(event);
 		if (!value || value.length > 15) {
 			setError('Name must be between 1 and 15 characters long.')
 		}
@@ -22,7 +21,7 @@ function NameForm({onSuccess}) {
 		<div className={style.content}>
 			<h2>What's the name of the activity?</h2>
 			<form onSubmit={handleSubmit}>
-				<input id="form-name" type="text" name="name" placeholder="Name" />
+				<input type="text" name="name" placeholder="Name" />
 				{error ? <div className={style.validationError}>{error}</div> : null}
 				<button type="submit">Next</button>
 			</form>
@@ -41,8 +40,8 @@ function SeasonForm({onSuccess}) {
 		<div className={style.content}>
 			<h2>What season is the best for it?</h2>
 			<form onSubmit={handleSubmit}>
-				<select id="form-season" name="season">
-					<option selected value="summer">
+				<select name="season" defaultValue="summer">
+					<option value="summer">
 						Summer
 					</option>
 					<option value="fall">Fall</option>
@@ -59,8 +58,9 @@ function DurationForm({ onSuccess }) {
 	const [error, setError] = useState('');
 	
 	function handleSubmit(event) {
+		event.preventDefault();
 		const { name, value } = event.target[0];
-		if (value > 300) {
+		if (!value || value > 300) {
 			setError('Duration must be between 1 and 300 minutes.');
 		}
 		else {
@@ -69,10 +69,10 @@ function DurationForm({ onSuccess }) {
 	}
 
 	return (
-		<div>
+		<div className={style.content}>
 			<h2>How long does it take (in minutes)</h2>
 			<form onSubmit={handleSubmit}>
-				<input id="form-duration" type="number" name="duration" min="1" />
+				<input type="number" name="duration" min="1" />
 				{error ? <span className={style.validationError}>{error}</span> : null}
 				<button type="submit">Next</button>
 			</form>
@@ -153,11 +153,15 @@ function CountriesForm({ onSuccess }) {
 	);
 }
 
-function ConfirmationForm({ onConfirmation }) {
+function ConfirmationForm({ onConfirmation, onRestart }) {
 	return (
 		<div className={style.content}>
 			<h1>Almost done!</h1>
 			<p>Check if all the details are correct. If you're not sure about something, you can restart the process.</p>
+			<div className={style.buttonContainer}>
+				<button onClick={onConfirmation}>Confirm</button>
+				<button onClick={onRestart}>Restart</button>
+			</div>
 		</div>
 	)
 }
@@ -170,8 +174,11 @@ export default function ActivityForm() {
         difficulty: 0,
         countries: [],
     });
-
+    const [formIndex, setFormIndex] = useState(0);
     const [submited, setSubmited] = useState(false);
+
+	/*Refs for placeholders*/
+	const infoContRef = useRef(null);
 	    
     const forms = [
 		<NameForm onSuccess={handleSuccess} />,
@@ -179,10 +186,9 @@ export default function ActivityForm() {
 		<DurationForm onSuccess={handleSuccess} />,
 		<DifficultyForm onSuccess={handleSuccess}/>,
 		<CountriesForm onSuccess={handleSuccess}/>,
-		<ConfirmationForm onConfirmation={handleSubmit}/>
+		<ConfirmationForm onConfirmation={handleSubmit} onRestart={handleRestart}/>
 	];
 
-    const [formIndex, setFormIndex] = useState(4)
 
 	function handleSuccess(name, value, event) {
 		if (event) {
@@ -199,20 +205,43 @@ export default function ActivityForm() {
         axios.post(`http://localhost:3001/activity`, state)
             .then(() => { setSubmited(true);})
             .catch((err) => console.error(err));
-    }
+	}
+	
+	function handleRestart() {
+		setState({
+			name: '',
+			season: '',
+			duration: 0,
+			difficulty: 0,
+			countries: [],
+		});
+		setFormIndex(0);
+		infoContRef.current.childNodes.forEach(node => node.classList.toggle(style.placeholder))
+	}
+
+	useEffect(() => {
+		//const [name, season, duration, difficulty, countries] = infoContRef.current.childNodes;
+		if(formIndex - 1 >= 0) infoContRef.current.childNodes[formIndex - 1].classList.toggle(style.placeholder);
+	}, [formIndex]);
+
 
     return !submited ? (
 		<div className={style.container}>
-			<div className={style.infoContainer}>
-				{formIndex > 0 ? <h1>{state.name}</h1> : <div className={style.namePlaceholder}></div>}
-				{formIndex > 1 ? <span>{state.season}</span> : <div className={style.seasonPlaceholder}></div>}
-				{formIndex > 2 ? <span>{state.duration}</span> : <div className={style.durationPlaceholder}></div>}
-				{formIndex > 3 ? <span>{state.difficulty}</span> : <div className={style.difficultyPlaceholder}></div>}
-				{formIndex > 4 ? state.countries.map((country) => <div>{country}</div>) : <div className={style.countriesPlaceholder}></div>}
+			<div className={style.infoContainer} ref={infoContRef}>
+				<h1 className={style.placeholder}>I'll go {state.name}</h1>
+				<span className={style.placeholder}>this {state.season}</span>
+				<span className={style.placeholder}>it should take {state.duration} minutes</span>
+				<span className={style.placeholder}>its a {state.difficulty}/5 in terms of difficulty</span>
+				<div className={`${style.placeholder} ${style.infoCountries}`}>
+					<span>I can do it in...</span>
+					<div className={style.infoCountriesContainer}>
+						{state.countries.map((country) => (
+							<div className={style.infoCountry}>{country}</div>
+						))}
+					</div>
+				</div>
 			</div>
-			<div className={style.formContainer}>
-				{forms[formIndex]}
-			</div>
+			<div className={style.formContainer}>{forms[formIndex]}</div>
 		</div>
 	) : (
 		<div className={style.success}>
