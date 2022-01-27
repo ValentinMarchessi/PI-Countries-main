@@ -1,19 +1,25 @@
 .container{
     width: 65vw;
     margin:auto;
-    background-color: pink;
+    background-color: #7A82AB;
     display: flex;
     flex-direction: row;
+    border-radius: 20px;
     gap: 30px;
+    box-shadow: 2px 2px 10px black;
 }
 
 .container img{
     width: 200px;
     margin: auto;
+    box-shadow: 2px 2px 10px black;
 }
 
 .infoContainer{
-    background-color: rgb(127, 127, 255);
+    color: white;
+    background-color: #212738;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -25,12 +31,15 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background-color: cyan;
+    background-color: #941C2F;
+    box-shadow: 2px 2px 2px black;
 }
 
 .activityCardsContainer{
+    max-height: auto;
     display: grid;
     grid-template-columns: auto auto auto;
+    overflow-y : auto;
     gap: 20px;
 }
 
