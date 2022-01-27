@@ -99,7 +99,7 @@ function DifficultyForm({onSuccess}) {
 }
 
 function CountriesForm({ onSuccess }) {
-	const countries = useSelector((store) => store.countries).map((country) => country.name);
+	const countries = useSelector((store) => store.countries);
 	const [selected, setSelected] = useState([])
 	const [input, setInput] = useState('');
 	const [error, setError] = useState('');
