@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const { Country, Activity } = require('../db.js')
 
 router.get('/', async function (req, res) {
-    const { name, page, orderBy, direction } = req.query;
+    const { name, page, orderBy, direction, filter, filterValue } = req.query;
 
     if (!await Country.count()) {
         console.log('Countries table is empty, fetching countries from external API.');
@@ -43,30 +43,45 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            let options = orderBy ? {
-                order: [[orderBy, direction ? direction : "DESC"]],
-                offset: 10 * (page - 1),
-                limit: 10,
-            } : {
-                offset: 10 * (page - 1),
-                limit: 10,
+            console.log(filter, filterValue);
+            let options = { offset: 10 * (page - 1), limit: 10 };
+            if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
+            if (filter === 'continent' && filterValue) options = {
+                ...options,
+                where: { continent: filterValue }
+            };
+            if (filter === 'activity' && filterValue) options = {
+                ...options,
+                include: [
+                    {
+                        model: Activity,
+                        where: { name: filterValue }
+                    }]
             }
             const { count, rows } = await Country.findAndCountAll(options).catch(function (err) {
 				console.log(err);
 			});
-            count ? res.status(200).send(rows) : res.sendStatus(400);
+            count ? res.status(200).send(rows) : res.status(404).send('No countries found for the given query.');
         }
+        res.status(400).send('Invalid Query');
     }
     else try { 
         country_array = await Country.findAll({
             attributes: ['name']
-        })
+        }).then(countries => countries.map(country => country.name));
         country_array.length ? res.status(200).json(country_array) : res.sendStatus(400);
     } catch (error) {
         console.error(error);
         res.sendStatus(400);
     }
 })
+
+router.get('/continents', async function (req, res) {
+	const continents = await Country.findAll({
+		attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('continent')),'continent']],
+	}).then(continents => continents.map(entry => entry.continent)).catch((err) => console.log(err));
+	continents.length ? res.json(continents) : res.sendStatus(400);
+});
 
 router.get('/:countryId', async function (req, res){
     try {
@@ -100,15 +115,6 @@ router.get('/:countryId', async function (req, res){
         console.error(error);
         res.sendStatus(400);
     }
-})
-
-router.get('/page/:num', async function (req, res) {
-    const { num } = req.params
-    const { count, rows } = await Country.findAndCountAll({
-        offset: 10 * (num - 1),
-        limit: 10,
-    }).catch(function (err) {console.log(err)});
-    count ? res.status(200).send(rows) : res.sendStatus(400);
 })
 
 module.exports = router;
