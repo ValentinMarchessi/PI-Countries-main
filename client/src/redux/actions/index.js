@@ -13,7 +13,7 @@ export function loadPages({orderBy, direction}) {
             dispatch({type: 'LOAD_PAGES', payload: pages});     
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 }
@@ -25,7 +25,19 @@ export function loadCountries() {
             dispatch({type: 'LOAD_COUNTRIES', payload: countries});
         }
         catch (error) {
-            console.log(error);
+            console.error(error);
+        }
+    }
+}
+
+export function loadActivities() {
+    return async function (dispatch) {
+        try {
+            const activities = await axios.get(`http://localhost:3001/activity`).then(({ data }) => data);
+            dispatch({ type: 'LOAD_ACTIVITIES', payload: activities });
+        }
+        catch (error) {
+            console.error(error);
         }
     }
 }
