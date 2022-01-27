@@ -50,8 +50,10 @@ router.get('/', async (req, res) => {
 			console.log(err);
 			res.status(400).send(err);
 		}
-    }
-    res.status(400).send('Invalid Query');
+	}
+
+	const results = await Activity.findAll()
+	res.send(results);
 });
 
 module.exports = router;
