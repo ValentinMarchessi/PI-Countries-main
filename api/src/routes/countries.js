@@ -4,19 +4,20 @@ const { Op } = require('sequelize');
 const { Country, Activity } = require('../db.js')
 
 router.get('/', async function (req, res) {
-    const { name, page } = req.query;
+    const { name, page, orderBy, direction } = req.query;
 
     if (!await Country.count()) {
         console.log('Countries table is empty, fetching countries from external API.');
         const { status, data } = await axios('https://restcountries.com/v3/all');
         data.forEach(function (country) {
-            const { cca3, name, flags, region, capital } = country;
+            const { cca3, name, flags, region, capital, population } = country;
             Country.create({
                 id: cca3,
                 name: name.common,
                 flag: flags[0],
                 continent: region,
                 capital: capital ? capital[0] : 'unavailable', 
+                population,
             });
         })
         console.log('Syncing countries table...');
@@ -26,7 +27,6 @@ router.get('/', async function (req, res) {
     if (Object.keys(req.query).length) {
         if (name) {
             try {
-                console.log(await Country.count());
                 const query_result = await Country.findAll({
                     where: {
                         name: {
@@ -43,10 +43,17 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            const { count, rows } = await Country.findAndCountAll({
+            let options = orderBy ? {
+                order: [[orderBy, direction ? direction : "DESC"]],
                 offset: 10 * (page - 1),
                 limit: 10,
-            }).catch(function (err) {console.log(err)});
+            } : {
+                offset: 10 * (page - 1),
+                limit: 10,
+            }
+            const { count, rows } = await Country.findAndCountAll(options).catch(function (err) {
+				console.log(err);
+			});
             count ? res.status(200).send(rows) : res.sendStatus(400);
         }
     }
