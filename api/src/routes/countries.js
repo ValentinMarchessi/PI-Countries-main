@@ -43,7 +43,7 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            console.log(filter, filterValue);
+            //console.log(filter, filterValue);
             let options = { offset: 10 * (page - 1), limit: 10 };
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
             if (filter === 'continent' && filterValue) options = {
@@ -63,7 +63,7 @@ router.get('/', async function (req, res) {
 			});
             count ? res.status(200).send(rows) : res.status(404).send('No countries found for the given query.');
         }
-        res.status(400).send('Invalid Query');
+        if(!name && !page) res.status(400).send('Invalid Query');
     }
     else try { 
         country_array = await Country.findAll({
