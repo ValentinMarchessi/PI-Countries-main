@@ -9,7 +9,6 @@ export default function Home() {
 			<h1 className={style.moto}>Find your destination...</h1>
 			<Searchbar />
 			<CardContainer />
-			<Link to="/activity/create">Create your activity!</Link>
 		</div>
 	);
 }
