@@ -5,7 +5,7 @@ const initialState = {
     pages: [],
     page: {},
 	filter: {type: '', value: ''},
-	order: { by: '', direction: '' },
+	order: { by: 'name', direction: 'DESC' },
 };
 
 export default function rootReducer(state = initialState, action) {
