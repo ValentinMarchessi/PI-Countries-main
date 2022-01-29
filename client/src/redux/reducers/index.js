@@ -2,7 +2,8 @@ const initialState = {
 	countries: [],
 	continents: [],
 	activities: [],
-	pages: [],
+    pages: [],
+    page: {},
 	filter: {type: '', value: ''},
 	order: { by: '', direction: '' },
 };
@@ -14,6 +15,12 @@ export default function rootReducer(state = initialState, action) {
                 ...state,
                 pages: action.payload,
             }
+        case 'LOAD_PAGE': {
+            return {
+                ...state,
+                page: action.payload
+            }
+        }
         case 'LOAD_COUNTRIES':
             return {
                 ...state,

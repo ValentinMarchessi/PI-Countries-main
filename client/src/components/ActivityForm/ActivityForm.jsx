@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadCountries } from '../../redux/actions';
 import axios from 'axios';
 import style from './ActivityForm.module.css';
 
@@ -103,6 +104,11 @@ function CountriesForm({ onSuccess }) {
 	const [selected, setSelected] = useState([])
 	const [input, setInput] = useState('');
 	const [error, setError] = useState('');
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if(!countries.length) dispatch(loadCountries());
+	},[dispatch, countries])
 
 	function handleChange(event) {
 		const { value } = event.target;

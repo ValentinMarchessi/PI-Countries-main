@@ -44,24 +44,35 @@ router.get('/', async function (req, res) {
         }
         if (page) {
             //console.log(filter, filterValue);
-            let options = { offset: 10 * (page - 1), limit: 10 };
+            let options = { offset: 10 * (page - 1), limit: 10 }, normalizedValue = '';
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
-            if (filter === 'continent' && filterValue) options = {
+
+            //Si filterValue tiene espacios en la url son reemplazados por %20, esto corrige los espacios
+            //para poder hacer el request a la base de datos
+            if (filterValue) normalizedValue = filterValue.replace(/%20/g, ' ').trim();
+            
+            if (filter === 'Continent' && normalizedValue) options = {
                 ...options,
-                where: { continent: filterValue }
+                where: { continent: normalizedValue }
             };
-            if (filter === 'activity' && filterValue) options = {
+
+            if (filter === 'Activity' && normalizedValue) options = {
                 ...options,
                 include: [
                     {
                         model: Activity,
-                        where: { name: filterValue }
+                        where: { name: normalizedValue }
                     }]
             }
+            const nextPage = await Country.findAndCountAll({...options ,offset: 10 * page});
             const { count, rows } = await Country.findAndCountAll(options).catch(function (err) {
 				console.log(err);
 			});
-            count ? res.status(200).send(rows) : res.status(404).send('No countries found for the given query.');
+            count ? res.status(200).send({
+                content: rows,
+                nextPage: nextPage.rows.length
+            })
+                : res.status(404).send('No countries found for the given query.');
         }
         if(!name && !page) res.status(400).send('Invalid Query');
     }
