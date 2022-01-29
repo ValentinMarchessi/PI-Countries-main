@@ -1,6 +1,6 @@
 .container{
     width: 65vw;
-    margin:auto;
+    margin: 20px auto;
     background-color: #7A82AB;
     display: flex;
     flex-direction: row;
@@ -17,7 +17,7 @@
 
 .infoContainer{
     color: white;
-    background-color: #212738;
+    background-color: #941C2F;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     padding: 20px;
@@ -27,25 +27,28 @@
 }
 
 .activityCard {
+    color: white;
     height: fit-content;
     padding: 10px;
     display: flex;
     flex-direction: column;
     background-color: #941C2F;
-    box-shadow: 2px 2px 2px black;
+    box-shadow: 0px 2px 5px black;
+    margin: 10px 0;
 }
 
 .activityCardsContainer{
-    max-height: auto;
+    max-height: 100%;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     overflow-y : auto;
     gap: 20px;
+    justify-content: space-around;
 }
 
 .activities{
     padding: 30px;
-    margin:0 auto;
+    width: 100%;
 }
 
 .activities h1{

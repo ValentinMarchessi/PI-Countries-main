@@ -1,3 +1,10 @@
 .landing{
-    width: 100vw;
+    width: 100%;
+    height: 100vh;
+    background-image: url('https://hips.hearstapps.com/clv.h-cdn.co/assets/17/39/2048x1365/gallery-1506698480-gettyimages-150127577.jpg');
+    background-size: 100% 100%;
+}
+
+.landing h1 {
+    margin: 0;
 }

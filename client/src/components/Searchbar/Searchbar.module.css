@@ -44,7 +44,7 @@
 .dropdown a{
     text-decoration: none;
     color:white;
-    background-color: #3A405A;
+    background-color: #941C2F;
     width: 60%;
     padding: 10px 5%;
     z-index: 20;
@@ -52,6 +52,6 @@
 }
 
 .dropdown a:hover{
-    background-color: #45495e;
-    color: #F9DEC9;
+    color: black;
+    background-color: #CBFF8C;
 }
