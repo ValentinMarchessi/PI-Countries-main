@@ -26,9 +26,9 @@ function ButtonSelect({ options, handler }) {
 		);
 	}, [selected, setButtons, options, handler]);
 
-	return options ?
+	return (options && options.length) ?
 		<div className={style.buttonSelect}>{buttons}</div> :
-		<h1>No options available.</h1>;
+		<h1 id={style.optionError}>No options available.</h1>;
 }
 
 function FilterMenu() {
@@ -84,11 +84,13 @@ function FilterMenu() {
 	return (
 		<div className={style.filterMenu}>
 			<ButtonSelect options={['Activity', 'Continent']} handler={handleParameter} />
+			<div className={style.filterSelection}>
 			{selected.parameter ?
-				<div className={style.filterSelection}>{selected.parameter === 'Continent' ?
+				selected.parameter === 'Continent' ?
 				<ButtonSelect options={continents} handler={handleOption} /> :
 				selected.parameter === 'Activity' ?
-				<ButtonSelect options={activities} handler={handleOption} /> : <></>}</div> : null}
+				<ButtonSelect options={activities} handler={handleOption} /> : <></> : null}
+			</div>
 		</div>
 	);
 }
@@ -138,15 +140,24 @@ function SearchOptions() {
 }
 
 function PageNav({ index, handlePageNav }) {
+	const nextPage = useSelector(store => store.page.nextPage);
 	return (
 		<div className={style.navigation}>
-			<button name="decrementPage" onClick={handlePageNav}>
-				Previous
-			</button>
+			<div id="increment">
+				{index > 1 ? (
+					<button className="material-icons" name="decrementPage" onClick={handlePageNav}>
+						navigate_before
+					</button>
+				) : null}
+			</div>
 			<h1>{index}</h1>
-			<button name="incrementPage" onClick={handlePageNav}>
-				Next
-			</button>
+			<div id="decrement">
+				{nextPage ? (
+					<button className="material-icons" name="incrementPage" onClick={handlePageNav}>
+						navigate_next
+					</button>
+				) : null}
+			</div>
 		</div>
 	);
 }
@@ -163,10 +174,14 @@ export default function CardContainer() {
 		dispatch(loadPage(index,{ order, filter }));
 	}, [dispatch, order, filter, index]);
 
+	useEffect(() => {
+		setIndex(1); //por seguridad
+	},[filter])
+
 	function handlePageNav(event) {
 		const { name } = event.target;
-		if (name === 'incrementPage' && page.nextPage) setIndex(index + 1);
-		if (name === 'decrementPage' && index > 1) setIndex(index - 1);
+		if (name === 'incrementPage') setIndex(index + 1);
+		if (name === 'decrementPage') setIndex(index - 1);
 	}
 
 	return (
