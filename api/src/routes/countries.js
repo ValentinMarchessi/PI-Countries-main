@@ -8,7 +8,7 @@ router.get('/', async function (req, res) {
 
     if (!await Country.count()) {
         console.log('Countries table is empty, fetching countries from external API.');
-        const { status, data } = await axios('https://restcountries.com/v3/all');
+        const { data } = await axios('https://restcountries.com/v3/all');
         data.forEach(function (country) {
             const { cca3, name, flags, region, capital, population } = country;
             Country.create({
@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
                 continent: region,
                 capital: capital ? capital[0] : 'unavailable', 
                 population,
-            });
+            }).catch(err => console.error(err));
         })
         console.log('Syncing countries table...');
         await Country.sync({ alter: true });
@@ -47,8 +47,10 @@ router.get('/', async function (req, res) {
             let options = { offset: 10 * (page - 1), limit: 10 }, normalizedValue = '';
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
 
-            //Si filterValue tiene espacios en la url son reemplazados por %20, esto corrige los espacios
-            //para poder hacer el request a la base de datos
+            /*
+                Si filterValue tiene espacios en la url son reemplazados por %20, esto corrige los espacios
+                para poder hacer el request a la base de datos
+            */
             if (filterValue) normalizedValue = filterValue.replace(/%20/g, ' ').trim();
             
             if (filter === 'Continent' && normalizedValue) options = {
