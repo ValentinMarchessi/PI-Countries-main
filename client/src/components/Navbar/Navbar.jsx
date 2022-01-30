@@ -5,7 +5,7 @@ export default function Navbar() {
     return (
         <nav className={style.navbar}>
             <Link to='/home'>Home</Link>
-            <Link to='/activity/create'>Create Activity</Link>
+            <Link to='activity/create'>Create Activity</Link>
         </nav>
     )
 }
