@@ -19,8 +19,8 @@ ReactDOM.render(
 			<BrowserRouter>
 				<Routes>
 					<Route exact path="/" element={<Landing />} />
-					<Route path="/home" element={<App />}>
-						<Route index element={<Home />} />
+					<Route path="/" element={<App />}>
+						<Route path="home" element={<Home />} />
 						<Route path="country/:id" element={<CountryDetails />} />
 						<Route path="activity/create" element={<ActivityForm />} />
 					</Route>
