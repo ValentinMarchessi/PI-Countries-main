@@ -39,7 +39,6 @@ export default function CountryDetails() {
     useEffect(() => {
         (async function () {
             await axios.get(`http://localhost:3001/countries/${id}`).then(({ data }) => {
-                console.log(data);
                 setCountry(data);
             })
             isLoading(false);
