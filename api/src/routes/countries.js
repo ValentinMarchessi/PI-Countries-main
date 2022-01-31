@@ -43,12 +43,11 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            //console.log(filter, filterValue);
             let options = { offset: 10 * (page - 1), limit: 10 }, normalizedValue = '';
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
 
             /*
-                Si filterValue tiene espacios en la url son reemplazados por %20, esto corrige los espacios
+                Si filterValue tiene espacios en la url estos son reemplazados por %20, esto corrige los espacios
                 para poder hacer el request a la base de datos
             */
             if (filterValue) normalizedValue = filterValue.replace(/%20/g, ' ').trim();
