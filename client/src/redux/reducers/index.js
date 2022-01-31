@@ -2,24 +2,23 @@ const initialState = {
 	countries: [],
 	continents: [],
 	activities: [],
-    pages: [],
-    page: {},
-	filter: {type: '', value: ''},
-	order: { by: 'name', direction: 'DESC' },
+    page: {
+        current: {},
+        filter: {type: '', value: ''},
+        order: { by: 'name', direction: 'DESC' },
+    },
 };
 
 export default function rootReducer(state = initialState, action) {
     switch (action.type) {
-        case 'LOAD_PAGES':
-            return {
-                ...state,
-                pages: action.payload,
-            }
         case 'LOAD_PAGE': {
             return {
-                ...state,
-                page: action.payload
-            }
+				...state,
+				page: {
+					...state.page,
+					current: action.payload,
+				},
+			};
         }
         case 'LOAD_COUNTRIES':
             return {
@@ -39,12 +38,18 @@ export default function rootReducer(state = initialState, action) {
         case 'SET_ORDER':
             return {
                 ...state,
-                order: action.payload
+                page: {
+                    ...state.page,
+                    order: action.payload
+                }
             }
         case 'SET_FILTER':
             return {
                 ...state,
-                filter: action.payload
+                page: {
+                    ...state.page,
+                    filter: action.payload
+                }
             }
         default:
             return state;
