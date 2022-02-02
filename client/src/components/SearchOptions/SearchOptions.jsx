@@ -9,7 +9,7 @@ function ButtonSelect({ options, handler }) {
 
 	useEffect(() => {
 		function handleButton(event) {
-			const value = event.target.value;
+			const { value } = event.target;
 			selected !== value ? setSelected(value) : setSelected('');
 			selected !== value ? handler(value) : handler('');
 		}
@@ -17,9 +17,10 @@ function ButtonSelect({ options, handler }) {
 		if (options)
 			setButtons(
 				options.map((option) => {
+					//option.value == selected es seguro, es una comparación number == 'number' en caso de que option.value sea un número,
 					return (
-						<button className={`${option === selected ? `${style.selected}` : ''}`} key={option} value={option} onClick={handleButton}>
-							{option}
+						<button className={`${option.value == selected ? `${style.selected}` : ''}`} key={option.value} value={option.value} onClick={handleButton}>
+							{option.name}
 						</button>
 					);
 				})
@@ -31,8 +32,10 @@ function ButtonSelect({ options, handler }) {
 
 function FilterMenu() {
 	const dispatch = useDispatch();
-	const activities = useSelector((store) => store.activities).map((activity) => activity.name);
-	const continents = useSelector((store) => store.continents);
+	const activities = useSelector((store) => store.activities).map((activity) => { return {name: activity.name, value:	activity.id}});
+	const continents = useSelector((store) => store.continents).map((continent) => { return { name: continent, value: continent } });
+	//name es para el display
+	//value es el valor que eventualmente recibe la API, debe ser único
 	const [selected, setSelected] = useState({
 		parameter: '',
 		option: '',
@@ -81,7 +84,7 @@ function FilterMenu() {
 
 	return (
 		<div className={style.filterMenu}>
-			<ButtonSelect options={['Activity', 'Continent']} handler={handleParameter} />
+			<ButtonSelect options={['Activity', 'Continent'].map((e) => {return {name: e, value:e}})} handler={handleParameter} />
 			<div className={style.filterSelection}>{selected.parameter ? selected.parameter === 'Continent' ? <ButtonSelect options={continents} handler={handleOption} /> : selected.parameter === 'Activity' ? <ButtonSelect options={activities} handler={handleOption} /> : <></> : null}</div>
 		</div>
 	);
