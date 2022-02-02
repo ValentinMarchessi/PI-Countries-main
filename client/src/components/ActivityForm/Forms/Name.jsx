@@ -3,13 +3,17 @@ import style from './Name.module.css';
 
 export default function Name({ onSuccess }) {
 	const [error, setError] = useState('');
-
+	let regex = /[^A-Za-z-\s]/g;
 	function handleSubmit(event) {
 		event.preventDefault();
 		const { name, value } = event.target[0]; //name input value destruct
 		if (!value || value.length > 15) {
 			setError('Name must be between 1 and 15 characters long.');
-		} else {
+		}
+		else if (value.match(regex)) {
+			setError('Name can\'t contain special characters or numbers.')	
+		}
+		else {
 			onSuccess(name, value, event);
 		}
 	}
