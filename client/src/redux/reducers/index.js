@@ -7,6 +7,7 @@ const initialState = {
         filter: {type: '', value: ''},
         order: { by: 'name', direction: 'DESC' },
     },
+    index: 1,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -50,6 +51,11 @@ export default function rootReducer(state = initialState, action) {
                     ...state.page,
                     filter: action.payload
                 }
+            }
+        case 'SET_INDEX':
+            return {
+                ...state,
+                index: action.payload
             }
         default:
             return state;
