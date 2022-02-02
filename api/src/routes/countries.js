@@ -5,24 +5,27 @@ const { Country, Activity } = require('../db.js')
 
 router.get('/', async function (req, res) {
     const { name, page, orderBy, direction, filter, filterValue } = req.query;
-
-    if (!await Country.count()) {
-        console.log('Countries table is empty, fetching countries from external API.');
-        const { data } = await axios('https://restcountries.com/v3/all');
-        data.forEach(function (country) {
-            const { cca3, name, flags, region, capital, population } = country;
-            Country.create({
-                id: cca3,
-                name: name.common,
-                flag: flags[0],
-                continent: region,
-                capital: capital ? capital[0] : 'unavailable', 
-                population,
-            }).catch(err => console.error(err));
-        })
-        console.log('Syncing countries table...');
-        await Country.sync({ alter: true });
-    }
+    const countryCount = await Country.count();
+    if (countryCount === 0) {
+		console.log('Countries table is empty, fetching countries from external API.');
+		const { data } = await axios('https://restcountries.com/v3/all');
+		data.forEach(function (country) {
+			const { cca3, name, flags, region, capital, population } = country;
+            Country.findOrCreate({
+                where: { id: cca3 },
+                defaults: {
+                    id: cca3,
+                    name: name.common,
+                    flag: flags[0],
+                    continent: region,
+                    capital: capital ? capital[0] : 'unavailable',
+                    population,
+                }
+			}).catch((err) => console.error(err));
+		});
+		console.log('Syncing countries table...');
+		await Country.sync({ alter: true });
+	}
 
     if (Object.keys(req.query).length) {
         if (name) {
@@ -43,29 +46,28 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            let options = { offset: 10 * (page - 1), limit: 10 }, normalizedValue = '';
+            let options = { offset: 10 * (page - 1), limit: 10 };
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
 
             /*
                 Si filterValue tiene espacios en la url estos son reemplazados por %20, esto corrige los espacios
                 para poder hacer el request a la base de datos
             */
-            if (filterValue) normalizedValue = filterValue.replace(/%20/g, ' ').trim();
             
-            if (filter === 'Continent' && normalizedValue) options = {
+            if (filter === 'Continent') options = {
                 ...options,
-                where: { continent: normalizedValue }
+                where: { continent: filterValue }
             };
-
-            if (filter === 'Activity' && normalizedValue) options = {
+            console.log(filterValue);
+            if (filter === 'Activity') options = {
                 ...options,
                 include: [
                     {
                         model: Activity,
-                        where: { name: normalizedValue }
+                        where: { id: filterValue }
                     }]
             }
-            const nextPage = await Country.findAndCountAll({...options ,offset: 10 * page});
+            const nextPage = await Country.findAndCountAll({...options ,offset: 10 * page}).catch(err => console.error(err));
             const { count, rows } = await Country.findAndCountAll(options).catch(function (err) {
 				console.log(err);
 			});
