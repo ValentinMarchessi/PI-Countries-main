@@ -58,7 +58,6 @@ router.get('/', async function (req, res) {
                 ...options,
                 where: { continent: filterValue }
             };
-            console.log(filterValue);
             if (filter === 'Activity') options = {
                 ...options,
                 include: [
@@ -67,13 +66,12 @@ router.get('/', async function (req, res) {
                         where: { id: filterValue }
                     }]
             }
-            const nextPage = await Country.findAndCountAll({...options ,offset: 10 * page}).catch(err => console.error(err));
             const { count, rows } = await Country.findAndCountAll(options).catch(function (err) {
 				console.log(err);
 			});
             count ? res.status(200).send({
                 content: rows,
-                nextPage: nextPage.rows.length
+                count: count,
             })
                 : res.status(404).send('No countries found for the given query.');
         }
