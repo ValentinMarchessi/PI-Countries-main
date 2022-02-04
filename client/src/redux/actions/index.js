@@ -14,10 +14,9 @@ export function loadPage(index, {order, filter}) {
         }
     }
 }
-
+ 
 export function loadCountries() {
     return async function (dispatch) {
-        console.log('Action triggered: loadCountries()')
         try {
             const countries = await axios.get(`http://localhost:3001/countries`).then(({ data }) => data);
             dispatch({type: 'LOAD_COUNTRIES', payload: countries});
