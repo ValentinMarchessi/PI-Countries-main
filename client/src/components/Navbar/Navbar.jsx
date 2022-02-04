@@ -7,7 +7,7 @@ export default function Navbar() {
         <nav className={style.navbar}>
             <div id={style.slogan}>
                 <img id={style.logo} src={logo} alt="logo"></img>
-                <h1>Countries</h1>
+                <h1>Hollie</h1>
             </div>
             <div id={style.links}>
                 <Link to='/home'>Home</Link>

@@ -6,15 +6,20 @@
 }
 
 .landing .container{
-     position: absolute;
-        margin: 0;
-        bottom: 40%;
-        left: 30%;
+    position: absolute;
+    left:0;
+    right:0;
+    bottom:40%;
+    margin: auto;
+    width:200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .landing h1 {
     font-family: 'Dancing Script','Neonderthaw','Yellowtail',cursive;
-    font-size: 120px;
+    font-size: 160px;
     margin: 0;
 }
 
