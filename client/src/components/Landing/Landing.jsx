@@ -6,7 +6,7 @@ export default function Landing (){
     return (
         <div className={style.landing}>
             <div className={style.container}>
-                <h1>Countries</h1>
+                <h1>Hollie</h1>
                 <Link to='/home'><button>Home</button></Link>
             </div>
             <video autoPlay muted loop>
