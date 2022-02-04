@@ -46,7 +46,11 @@ router.get('/', async function (req, res) {
             }
         }
         if (page) {
-            let options = { offset: 10 * (page - 1), limit: 10 };
+            let options = {
+                offset: page > 1 ? 9 + 10 * (page - 1) : 0,
+                limit: page > 1 ? 10 : 9,
+            };
+
             if (orderBy) options = { ...options, order: [[orderBy, direction ? direction : "DESC"]] };
 
             /*

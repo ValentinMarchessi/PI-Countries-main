@@ -10,7 +10,7 @@ function PageNav() {
 	const { filter } = useSelector((store) => store.page);
 	const [index, setIndex] = useState(1); /* page index */
 	const dispatch = useDispatch();
-	const pageCount = Math.ceil(count / 10)
+	const pageCount = Math.floor(count / 10)
 
 	useEffect(() => {
 		dispatch({ type: 'SET_INDEX', payload: index });
@@ -28,6 +28,8 @@ function PageNav() {
 		if (name === 'gotoLast') setIndex(pageCount);
 	}
 
+	console.log(count, pageCount);
+
 	return (
 		<div className={style.navigation}>
 			<div id="first">
@@ -44,7 +46,7 @@ function PageNav() {
 					</button>
 				) : null}
 			</div>
-			<h1>{index}</h1>
+			<h1>{index}/{pageCount}</h1>
 			<div id="increment">
 				{index < pageCount ? (
 					<button className="material-icons" name="incrementPage" onClick={handlePageNav}>
