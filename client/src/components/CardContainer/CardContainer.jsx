@@ -10,7 +10,7 @@ function PageNav() {
 	const { filter } = useSelector((store) => store.page);
 	const [index, setIndex] = useState(1); /* page index */
 	const dispatch = useDispatch();
-	const pageCount = Math.floor(count / 10)
+	const pageCount = count < 10 ? 1 : Math.floor(count / 10)
 
 	useEffect(() => {
 		dispatch({ type: 'SET_INDEX', payload: index });
