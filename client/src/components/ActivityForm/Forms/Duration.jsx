@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import style from './Duration.module.css';
+import style from './Duration.module.scss';
 
 export default function Duration({ onSuccess }) {
 	const [error, setError] = useState('');

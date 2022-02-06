@@ -1,4 +1,4 @@
-import style from './CountryCard.module.css';
+import style from './CountryCard.module.scss';
 import { Link } from 'react-router-dom';
 
 export default function CountryCard({id, name, flag, continent}) {

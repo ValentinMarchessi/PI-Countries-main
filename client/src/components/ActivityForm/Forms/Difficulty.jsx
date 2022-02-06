@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from './Difficulty.module.css';
+import style from './Difficulty.module.scss';
 
 export default function Difficulty({ onSuccess }) {
 	const [display, setDisplay] = useState(3);

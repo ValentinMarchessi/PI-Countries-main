@@ -1,6 +1,6 @@
 import CardContainer from '../CardContainer/CardContainer.jsx';
 import Searchbar from '../Searchbar/Searchbar.jsx';
-import style from './Home.module.css';
+import style from './Home.module.scss';
 
 export default function Home() {
     return (

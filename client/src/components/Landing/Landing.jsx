@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import style from './Landing.module.css';
+import style from './Landing.module.scss';
 import video from './AirplaneFootage.mp4';
 
 export default function Landing (){

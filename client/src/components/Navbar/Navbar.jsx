@@ -1,4 +1,4 @@
-import style from './Navbar.module.css';
+import style from './Navbar.module.scss';
 import { Link } from 'react-router-dom';
 import logo from './Octicons-globe.svg';
 

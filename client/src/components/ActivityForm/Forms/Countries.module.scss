@@ -29,18 +29,16 @@
     border-radius: 10px;
     transform: scale(1);
     transition: background-color .2s ease-in-out, color .2s ease-in-out, transform 10ms ease-in-out;
+    &:hover{
+        color: white;
+        background-color: #F97068;
+    }
+    &:active{
+        transform: scale(.9);
+    }
 }
 
 .selected {
     color: white;
     background-color: #4A0D14;
-}
-
-.countryPill:hover {
-    color: white;
-    background-color: #F97068;
-}
-
-.countryPill:active {
-    transform: scale(.9);
 }

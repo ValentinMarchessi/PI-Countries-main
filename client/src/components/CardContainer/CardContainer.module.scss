@@ -26,40 +26,42 @@
     grid-template-rows: 100px;
     align-items: center;
     gap: 10px;
+
+    button{
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: hidden;
+        background-color: #941C2F;
+
+        &:active{
+            background-color: #C2EFB3;
+        }
+    }
+
+    h1{
+        grid-column: 3;
+    }
+    
+    #decrement{
+        height: 100px;
+        grid-column: 2;
+    }
+
+    #increment{
+        height: 100px;
+        grid-column: 4;
+    }
+
+    #first{
+        height: 100px;
+        grid-column: 1;
+    }
+
+    #last{
+        grid-column: 5;
+    }
+
 }
 
-.navigation button{
-    color: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: hidden;
-    background-color: #941C2F;
-}
-
-.navigation button:active{
-    background-color: #C2EFB3;
-}
-
-.navigation h1 {
-    grid-column: 3;
-}
-
-#decrement{
-    height: 100px;
-    grid-column: 2;
-}
-
-#increment{
-    height: 100px;
-    grid-column: 4;
-}
-
-#first{
-    height: 100px;
-    grid-column: 1;
-}
-
-#last{
-    grid-column: 5;
-}

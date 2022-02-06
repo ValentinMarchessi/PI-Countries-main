@@ -1,4 +1,4 @@
-import style from './Season.module.css'
+import style from './Season.module.scss'
 
 export default function Season({ onSuccess }) {
 	function handleSubmit(event) {

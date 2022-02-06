@@ -1,0 +1,68 @@
+.card {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: width .5s ease-in-out;
+    &:hover {
+        width: 200px;
+        img {
+            border-radius: 0%;
+        }
+        h1{
+            opacity: 1;
+        }
+        span{
+            opacity: 1;
+        }
+        .infoBox{
+            height: 70px;
+            width: 80%;
+            opacity: 1;
+        }
+    }
+    a {
+        width: inherit;
+        height: inherit;
+    }
+    img {
+        width: 100%;
+        height: inherit;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 1px 2px 5px black;
+        transition: border-radius 0.2s;
+    }
+    h1 {
+        opacity: 0;
+        font-size: 18px;
+        margin: 0;
+        text-align: center;
+        transition: opacity 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) .3s;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+    span{
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) .5s;
+    }
+}
+
+.infoBox {
+    color: white;
+    height: 0;
+    text-align: center;
+    width: 0;
+    padding: 5%;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: #941C2F;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    transition: opacity .2s ease-in, height .3s ease-in-out, width .3s ease-in-out;
+    z-index: 10;
+}

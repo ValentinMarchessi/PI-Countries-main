@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadCountries } from '../../../redux/actions';
-import style from './Countries.module.css';
+import style from './Countries.module.scss';
 
 export default function Countries({ onSuccess }) {
 	const countries = useSelector((store) => store.countries);

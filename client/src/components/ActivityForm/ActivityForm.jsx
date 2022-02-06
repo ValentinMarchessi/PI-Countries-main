@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import style from './ActivityForm.module.css';
+import style from './ActivityForm.module.scss';
 import { Confirmation, Name, Season, Duration, Difficulty, Countries } from './Forms';
 import InfoContainer from './InfoContainer';
 

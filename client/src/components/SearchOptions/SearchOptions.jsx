@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadActivities, loadContinents } from '../../redux/actions';
-import style from './SearchOptions.module.css';
+import style from './SearchOptions.module.scss';
 
 function ButtonSelect({ options, handler }) {
 	const [selected, setSelected] = useState('');

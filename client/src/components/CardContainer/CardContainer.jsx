@@ -1,5 +1,5 @@
 import CountryCard from '../CountryCard/CountryCard.jsx';
-import style from './CardContainer.module.css';
+import style from './CardContainer.module.scss';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPage } from '../../redux/actions';

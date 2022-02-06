@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import style from './Searchbar.module.css';
+import style from './Searchbar.module.scss';
 import { Link } from 'react-router-dom';
 
 export default function Searchbar() {

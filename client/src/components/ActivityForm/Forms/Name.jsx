@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import style from './Name.module.css';
+import style from './Name.module.scss';
 
 export default function Name({ onSuccess }) {
 	const [error, setError] = useState('');

@@ -1,4 +1,4 @@
-import style from './Confirmation.module.css'
+import style from './Confirmation.module.scss'
 
 export default function Confirmation({ onConfirmation, onRestart }) {
 	return (

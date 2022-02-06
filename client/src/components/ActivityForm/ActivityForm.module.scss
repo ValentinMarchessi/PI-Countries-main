@@ -1,0 +1,50 @@
+@use '../../App.scss' as app;
+
+.container{
+    width: 70%;
+    height: 60%;
+    padding: 40px;
+    margin: 5% auto;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: space-around;
+}
+
+.formContainer{
+    @include app.box-theme;
+    color: white;
+    padding: 40px 10px;
+    width: 40%;
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        input{
+            border: hidden;
+            text-align: center;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        button{
+            @include app.button;
+        }
+    }
+}
+
+.success {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+    h1{
+        width: fit-content;
+    }
+}
