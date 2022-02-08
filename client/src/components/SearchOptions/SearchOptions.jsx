@@ -3,32 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadActivities, loadContinents } from '../../redux/actions';
 import style from './SearchOptions.module.scss';
 
-function ButtonSelect({ options, handler }) {
-	const [selected, setSelected] = useState('');
-	const [buttons, setButtons] = useState([]);
-
-	useEffect(() => {
-		function handleButton(event) {
-			const { value } = event.target;
-			selected !== value ? setSelected(value) : setSelected('');
-			selected !== value ? handler(value) : handler('');
-		}
-
-		if (options)
-			setButtons(
-				options.map((option) => {
-					//option.value == selected es seguro, es una comparación number == 'number' en caso de que option.value sea un número,
-					return (
-						<button className={`${option.value == selected ? `${style.selected}` : ''}`} key={option.value} value={option.value} onClick={handleButton}>
-							{option.name}
-						</button>
-					);
-				})
-			);
-	}, [selected, setButtons, options, handler]);
-
-	return options && options.length ? <div className={style.buttonSelect}>{buttons}</div> : <h1 id={style.optionError}>No options available.</h1>;
-}
+import ButtonSelect from '../ButtonSelect/ButtonSelect';
 
 function FilterMenu() {
 	const dispatch = useDispatch();
@@ -117,7 +92,7 @@ export default function SearchOptions() {
 	}
 
 	return (
-		<div>
+		<div className={style.container}>
 			<div className={style.options}>
 				<button onClick={handleOptions} name="by" className="material-icons" title={order.by === 'name' ? 'Alphabetical' : 'Population'}>
 					{order.by === 'name' ? 'sort_by_alpha' : 'group'}

@@ -1,4 +1,4 @@
-import style from './InfoContainer.module.css'
+import style from './InfoContainer.module.scss'
 
 export default function InfoContainer({info}) {
 	let { name, season, duration, difficulty, countries } = info;

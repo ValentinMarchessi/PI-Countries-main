@@ -1,4 +1,7 @@
+@use '../../App.scss' as app;
+
 .navbar {
+	@include app.theme;
 	padding: 2vh 0;
 	width: auto;
 	padding: 10px 30px;
@@ -7,7 +10,6 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
-	background-color: #941c2f;
 
 	a {
 		color: white;

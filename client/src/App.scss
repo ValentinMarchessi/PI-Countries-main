@@ -1,10 +1,19 @@
-$primary-color: #941c2f;
+$text-color: white;
+$background-color: #941c2f;
+$button-color: white;
+$button-text-color: black;
+$hover-color: #ffaab7;
+$select-color: red;
+
+@mixin theme{
+	background-color: $background-color;
+}
 
 @mixin box-theme {
-	color: white;
-	background-color: $primary-color;
+	@include border;
+	@include theme;
+	color: $text-color;
 	box-shadow: 2px 2px 3px rgb(92, 92, 92);
-	border-radius: 20px;
 }
 
 @mixin border {
@@ -13,13 +22,19 @@ $primary-color: #941c2f;
 }
 
 @mixin button {
+	color: $button-text-color;
+	background-color: $button-color;
 	border: solid 2px transparent;
-	padding: 5px 20px;
-	border-radius: 5px;
+	padding: 3px 10px;
+	border-radius: 10px;
 	transition: background-color 0.2s ease-in;
 
 	&:hover {
-		background-color: #7a82ab;
+		background-color: $hover-color;
+	}
+
+	.selected{
+		background-color: $select-color;
 	}
 }
 
@@ -28,7 +43,7 @@ $primary-color: #941c2f;
 	height: 50px;
 	margin: 15% auto;
 	border: 10px solid transparent;
-	border-top: 10px solid blue;
+	border-top: 10px solid $background-color;
 	border-radius: 50%;
 	animation: spin 1s cubic-bezier(0.79, 0.14, 0.15, 0.86) infinite;
 }

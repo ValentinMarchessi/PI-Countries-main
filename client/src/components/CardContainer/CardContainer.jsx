@@ -27,10 +27,8 @@ function PageNav() {
 		if (name === 'gotoFirst') setIndex(1);
 		if (name === 'gotoLast') setIndex(pageCount);
 	}
-
-	console.log(count, pageCount);
-
-	return (
+	
+	return pageCount ? (
 		<div className={style.navigation}>
 			<div id="first">
 				{index > 1 ? (
@@ -62,7 +60,7 @@ function PageNav() {
 				) : null}
 			</div>
 		</div>
-	);
+	) : null;
 }
 
 export default function CardContainer() {
