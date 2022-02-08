@@ -4,8 +4,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 
+console.log('Importing database...');
 require('./db.js');
 
+console.log('Setting up server...');
 const server = express();
 
 server.name = 'API';

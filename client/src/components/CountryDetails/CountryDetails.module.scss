@@ -1,0 +1,43 @@
+@use "../../App" as app;
+$padding: 20px;
+
+.container{
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-around;
+    padding: $padding;
+    gap: 20px;
+
+    .info{
+        @include app.box-theme;
+        @include app.border;
+        display:flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: $padding;
+
+        img{
+            width: 200px;
+            margin: auto;
+            border: solid 2px rgb(255, 255, 255);
+            border-radius: 10px;
+        }
+
+        h4{
+            margin: 0;
+        }
+    }
+
+    .activities{
+        @include app.box-theme;
+        @include app.border;
+        width: 50%;
+        padding: $padding;
+        
+        .activitiesContainer{
+            display: flex;
+            overflow-y: auto;
+        }
+    }
+}
